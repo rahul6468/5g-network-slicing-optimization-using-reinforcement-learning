@@ -79,15 +79,7 @@ if len(y_test_no_nan) > 0:
     plt.ylabel('Loss')
     plt.title('Training and Validation Loss over Epochs')
     plt.legend()
-    plt.show()
 
-    # Generate a scatter plot of actual vs. predicted values
-    plt.figure(figsize=(10, 6))
-    plt.scatter(y_test_no_nan, y_pred_no_nan)
-    plt.xlabel('Actual Values')
-    plt.ylabel('Predicted Values')
-    plt.title('Actual vs. Predicted Values')
-    plt.show()
 else:
     print('No valid samples for calculating Mean Squared Error.')
 
@@ -119,18 +111,6 @@ X_train2, X_test2, y_train2, y_test2 = train_test_split(X2, y2, test_size=0.2, r
 scaler2 = StandardScaler()
 X_train2 = scaler2.fit_transform(X_train2)
 X_test2 = scaler2.transform(X_test2)
-
-# Reshape the data for 1D CNN for the second dataset
-X_train2 = X_train2.reshape((X_train2.shape[0], X_train2.shape[1], 1))
-X_test2 = X_test2.reshape((X_test2.shape[0], X_test2.shape[1], 1))
-
-# Build a separate CNN model for the second dataset
-model2 = Sequential()
-model2.add(Conv1D(filters=32, kernel_size=2, activation='relu', input_shape=(X_train2.shape[1], 1)))
-model2.add(MaxPooling1D(pool_size=2))
-model2.add(Flatten())
-model2.add(Dense(50, activation='relu'))
-model2.add(Dense(1, activation='linear'))  # Linear activation for regression
 
 # Compile the second model
 model2.compile(optimizer='adam', loss='mean_squared_error')
